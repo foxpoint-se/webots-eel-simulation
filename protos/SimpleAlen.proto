@@ -1,0 +1,82 @@
+#VRML_SIM R2023b utf8
+PROTO SimpleAlen [
+  field SFVec3f    translation  0 0 1
+  field SFRotation rotation     0 -1 0 1.5708
+  field SFFloat    density      997
+  field SFString   controller   "alen_controller_1"
+]
+{
+  Robot {
+    translation IS translation
+    rotation IS rotation
+    children [
+      DEF ALEN_BODY_SOLID Solid {
+        children [
+          DEF ALEN_BODY_SHAPE Shape {
+            appearance PBRAppearance {
+              baseColor 1 1 0.2
+              baseColorMap ImageTexture {
+                url [
+                  "../../../my_first_simulation/red_brick_wall.jpg"
+                ]
+              }
+              roughness 1
+              metalness 0
+            }
+            geometry Cylinder {
+              height 1
+              radius 0.048
+            }
+          }
+        ]
+      }
+      Propeller {
+        shaftAxis 0 0.05 1
+        centerOfThrust 0 0 -0.51
+        thrustConstants 0.1 0.1
+        torqueConstants 0 0
+        device RotationalMotor {
+          name "motor"
+          maxVelocity 400
+        }
+        slowHelix Solid {
+          translation 0 0 -0.51
+          rotation 0 0 -1 4.489769829751546
+          children [
+            Pose {
+              children [
+                Shape {
+                  appearance PBRAppearance {
+                    baseColor 1 0.4 0.7
+                    roughness 1
+                    metalness 0
+                  }
+                  geometry Box {
+                    size 0.01 0.2 0.01
+                  }
+                }
+              ]
+            }
+          ]
+          name "solid(1)"
+        }
+      }
+    ]
+    immersionProperties [
+      ImmersionProperties {
+        fluidName "fluid"
+        dragForceCoefficients 0.1 0 0
+        dragTorqueCoefficients 0.001 0 0
+        viscousResistanceTorqueCoefficient 0.005
+      }
+    ]
+    boundingObject USE ALEN_BODY_SHAPE
+    physics Physics {
+      density IS density
+      mass -1
+      damping Damping {
+      }
+    }
+    controller IS controller
+  }
+}

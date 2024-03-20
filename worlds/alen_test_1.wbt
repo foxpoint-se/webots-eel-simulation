@@ -1,0 +1,265 @@
+#VRML_SIM R2023b utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/floors/protos/RectangleArena.proto"
+
+WorldInfo {
+}
+Viewpoint {
+  orientation 0.45564882702642556 0.16694119287502437 -0.8743653610195834 2.5215436759867034
+  position 1.7321026155976897 2.260865532487741 3.6597547553914396
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+  floorSize 5 5
+}
+Solid {
+  translation 6.6442e-05 1.08465 0.05
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 0.7 0.8 0.8
+        roughness 1
+        metalness 0
+      }
+      geometry DEF TABLE_SHAPE Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  name "table(1)"
+  boundingObject USE TABLE_SHAPE
+}
+Solid {
+  translation 0.00266553 0.418464 0.2
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 0.7 0.8 0.8
+        roughness 1
+        metalness 0
+      }
+      geometry DEF TABLE_SHAPE Box {
+        size 0.4 0.2 0.4
+      }
+    }
+  ]
+  name "table(3)"
+  boundingObject USE TABLE_SHAPE
+}
+Solid {
+  translation 0.00327691 0.882921 0.05
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 0.7 0.8 0.8
+        roughness 1
+        metalness 0
+      }
+      geometry DEF TABLE_SHAPE Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  name "table(2)"
+  boundingObject USE TABLE_SHAPE
+}
+Robot {
+  translation -0.001882731491068929 0 0.4451891317279335
+  rotation 0 -1 0 1.585255025199619
+  children [
+    DEF ALEN_BODY_SOLID Solid {
+      children [
+        DEF ALEN_BODY_SHAPE Shape {
+          appearance PBRAppearance {
+            baseColor 1 1 0.2
+            baseColorMap ImageTexture {
+              url [
+                "../../../my_first_simulation/red_brick_wall.jpg"
+              ]
+            }
+            roughness 1
+            metalness 0
+          }
+          geometry Cylinder {
+            height 1
+            radius 0.048
+          }
+        }
+      ]
+    }
+    Propeller {
+      shaftAxis 0 0 1
+      centerOfThrust 0 0 -0.51
+      thrustConstants 0.1 0.1
+      torqueConstants 0 0
+      device RotationalMotor {
+        name "motor"
+        maxVelocity 400
+      }
+      slowHelix Solid {
+        translation 0 0 -0.51
+        rotation 0 0 -1 4.489769829751546
+        children [
+          Pose {
+            children [
+              Shape {
+                appearance PBRAppearance {
+                  baseColor 1 0.4 0.7
+                  roughness 1
+                  metalness 0
+                }
+                geometry Box {
+                  size 0.01 0.2 0.01
+                }
+              }
+            ]
+          }
+        ]
+        name "solid(1)"
+      }
+    }
+  ]
+  boundingObject USE ALEN_BODY_SHAPE
+  physics Physics {
+    damping Damping {
+    }
+  }
+  controller "alen_controller_1"
+}
+Solid {
+  translation 0 0 0.2
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 0.7 0.8 0.8
+        roughness 1
+        metalness 0
+      }
+      geometry DEF TABLE_SHAPE Box {
+        size 0.4 0.2 0.4
+      }
+    }
+  ]
+  name "table"
+  boundingObject USE TABLE_SHAPE
+}
+Robot {
+  translation 0.00022704113738133947 0.983494246142993 0.0437604352665744
+  children [
+    DEF BODY_POSE Pose {
+      rotation 0 1 0 1.57
+      children [
+        Solid {
+          children [
+            Shape {
+              appearance PBRAppearance {
+                baseColor 1 1 0.1
+                roughness 0.5
+                metalness 0.5
+              }
+              geometry DEF BODY Cylinder {
+                height 1
+                radius 0.05
+              }
+            }
+          ]
+          boundingObject USE BODY
+        }
+      ]
+    }
+    DEF SHAFT_BASE_POSE Pose {
+      translation 0.5 0 0
+      children [
+        Pose {
+          children [
+            DEF SHAFT_BASE_SHAPE Shape {
+              appearance PBRAppearance {
+                baseColor 0.6 0.3 0.2
+                roughness 0.3
+                metalness 0.5
+              }
+              geometry Sphere {
+                radius 0.01
+                subdivision 2
+              }
+            }
+          ]
+        }
+        Pose {
+          translation 0.01 0 0
+          rotation 0 1 0 1.57
+          children [
+            Shape {
+              appearance PBRAppearance {
+                roughness 0.3
+                metalness 0.7
+              }
+              geometry Cylinder {
+                height 0.02
+                radius 0.002
+              }
+            }
+          ]
+        }
+        DEF PROPELLER_POSE Pose {
+          translation 0.02 0 0
+          children [
+            DEF PROPELLER_HOUSE Shape {
+              appearance PBRAppearance {
+                roughness 0.3
+                metalness 0.7
+              }
+              geometry Sphere {
+                radius 0.003
+                subdivision 2
+              }
+            }
+            DEF PROPELLER Propeller {
+              thrustConstants 0.1 0.01
+              torqueConstants 0 0
+              device RotationalMotor {
+                name "motor"
+              }
+              slowHelix Solid {
+                children [
+                  Shape {
+                    appearance PBRAppearance {
+                      baseColor 1 0.3 0.1
+                      roughness 0.3
+                      metalness 0.1
+                    }
+                    geometry Box {
+                      size 0.005 0.001 0.15
+                    }
+                  }
+                ]
+                name "solid(1)"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+  name "robot(1)"
+  boundingObject Pose {
+    rotation 0 1 0 1.57
+    children [
+      Cylinder {
+        height 1
+        radius 0.05
+      }
+    ]
+  }
+  physics Physics {
+    centerOfMass [
+      0 0 -0.01
+    ]
+  }
+  controller "alen_controller_1"
+}

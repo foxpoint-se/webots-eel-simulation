@@ -1,0 +1,128 @@
+#VRML_SIM R2023b utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/solids/protos/SolidPipe.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/floors/protos/RectangleArena.proto"
+
+WorldInfo {
+}
+Viewpoint {
+  orientation 0.22950713389744448 0.14668302791968704 -0.9621905033882286 2.0388908170748383
+  position 7.0438202086561095 9.265360693786246 4.589149020391744
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+SolidPipe {
+  translation 0 0 -1
+  radius 5.05
+  appearance PBRAppearance {
+    baseColor 0.5 0.4 0.3
+    roughness 0.5
+    metalness 0
+  }
+}
+RectangleArena {
+  translation 0 0 -2
+  floorSize 20 20
+}
+Fluid {
+  translation 0 0 -1
+  children [
+    DEF WATER_SHAPE Shape {
+      appearance PBRAppearance {
+        baseColor 0.2 0.4 1
+        baseColorMap ImageTexture {
+          url [
+            "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/samples/geometries/controllers/water_flow_animation/water_flow.jpg"
+          ]
+        }
+        transparency 0.2
+        roughness 1
+        metalness 0
+      }
+      geometry Cylinder {
+        radius 5
+      }
+    }
+  ]
+  boundingObject USE WATER_SHAPE
+}
+DEF ROBOT Robot {
+  translation 3.80851 0 0.442217
+  rotation 0 1 0 -1.57
+  children [
+    DEF ALEN_BODY_SOLID Solid {
+      children [
+        DEF ALEN_BODY_SHAPE Shape {
+          appearance PBRAppearance {
+            baseColor 1 1 0.2
+            baseColorMap ImageTexture {
+              url [
+                "../../../my_first_simulation/red_brick_wall.jpg"
+              ]
+            }
+            roughness 1
+            metalness 0
+          }
+          geometry Cylinder {
+            height 1
+            radius 0.048
+          }
+        }
+      ]
+    }
+    DEF PROPELLER Propeller {
+      shaftAxis 0.2 0 1
+      centerOfThrust 0 0 -0.51
+      thrustConstants 0.1 0.01
+      torqueConstants 0 0
+      device RotationalMotor {
+        name "motor"
+        maxVelocity 400
+      }
+      slowHelix Solid {
+        translation 0 0 -0.51
+        rotation 0 0 -1 4.489769829751546
+        children [
+          Pose {
+            children [
+              Shape {
+                appearance PBRAppearance {
+                  baseColor 1 0.4 0.7
+                  roughness 1
+                  metalness 0
+                }
+                geometry Box {
+                  size 0.01 0.2 0.01
+                }
+              }
+            ]
+          }
+        ]
+        name "solid(1)"
+      }
+    }
+  ]
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005
+    }
+  ]
+  boundingObject USE ALEN_BODY_SHAPE
+  physics Physics {
+    density 997
+    centerOfMass [
+      -0.02 0 0
+    ]
+    damping Damping {
+    }
+  }
+  controller "alen_controller_teleop"
+  supervisor TRUE
+}

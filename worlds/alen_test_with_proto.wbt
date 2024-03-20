@@ -1,0 +1,55 @@
+#VRML_SIM R2023b utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/solids/protos/SolidPipe.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/floors/protos/RectangleArena.proto"
+EXTERNPROTO "../protos/SimpleAlen.proto"
+
+WorldInfo {
+}
+Viewpoint {
+  orientation 0.23351035921199192 0.16800943627739537 -0.9577294719608657 1.934860081809679
+  position 2.9870065803922365 10.009404503494377 5.957614635125021
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+SolidPipe {
+  translation 0 0 -1
+  radius 5.05
+  appearance PBRAppearance {
+    baseColor 0.5 0.4 0.3
+    roughness 0.5
+    metalness 0
+  }
+}
+RectangleArena {
+  translation 0 0 -2
+  floorSize 20 20
+}
+Fluid {
+  translation 0 0 -1
+  children [
+    DEF WATER_SHAPE Shape {
+      appearance PBRAppearance {
+        baseColor 0.2 0.4 1
+        baseColorMap ImageTexture {
+          url [
+            "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/samples/geometries/controllers/water_flow_animation/water_flow.jpg"
+          ]
+        }
+        transparency 0.2
+        roughness 1
+        metalness 0
+      }
+      geometry Cylinder {
+        radius 5
+      }
+    }
+  ]
+  boundingObject USE WATER_SHAPE
+}
+SimpleAlen {
+}

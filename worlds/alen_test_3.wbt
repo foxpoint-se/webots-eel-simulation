@@ -1,0 +1,168 @@
+#VRML_SIM R2023b utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/floors/protos/RectangleArena.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/Parquetry.proto"
+
+WorldInfo {
+}
+Viewpoint {
+  orientation 0.40217564172343684 0.03424428002888827 -0.9149218996666573 2.9860929142636117
+  position 3.5832683737357582 1.6421327878633363 3.8246960889127934
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+  name "rectangle arena(1)"
+  floorSize 30 30
+  floorAppearance Parquetry {
+  }
+}
+Fluid {
+  children [
+    DEF WATER_VOLUME Shape {
+      appearance PBRAppearance {
+        baseColor 0.7 0.7 1
+        baseColorMap ImageTexture {
+          url [
+            "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/samples/geometries/controllers/water_flow_animation/water_flow.jpg"
+          ]
+        }
+        transparency 0.95
+        metalness 0
+      }
+      geometry Box {
+        size 30 30 3
+      }
+    }
+  ]
+  boundingObject USE WATER_VOLUME
+}
+DEF ROBOT Robot {
+  translation 0.00022704113738133947 0.983494246142993 0.0437604352665744
+  children [
+    DEF BODY_POSE Pose {
+      rotation 0 1 0 1.57
+      children [
+        DEF BODY_SOLID Solid {
+          children [
+            Shape {
+              appearance PBRAppearance {
+                baseColor 1 1 0.1
+                roughness 0.5
+                metalness 0.5
+              }
+              geometry DEF BODY Cylinder {
+                height 1
+                radius 0.05
+              }
+            }
+          ]
+        }
+      ]
+    }
+    DEF SHAFT_BASE_POSE Pose {
+      translation 0.5 0 0
+      children [
+        Pose {
+          children [
+            DEF SHAFT_BASE_SHAPE Shape {
+              appearance PBRAppearance {
+                baseColor 0.6 0.3 0.2
+                roughness 0.3
+                metalness 0.5
+              }
+              geometry Sphere {
+                radius 0.01
+                subdivision 2
+              }
+            }
+          ]
+        }
+        Pose {
+          translation 0.01 0 0
+          rotation 0 1 0 1.57
+          children [
+            Shape {
+              appearance PBRAppearance {
+                roughness 0.3
+                metalness 0.7
+              }
+              geometry Cylinder {
+                height 0.02
+                radius 0.002
+              }
+            }
+          ]
+        }
+        DEF PROPELLER_POSE Pose {
+          translation 0.02 0 0
+          children [
+            DEF PROPELLER_HOUSE Shape {
+              appearance PBRAppearance {
+                roughness 0.3
+                metalness 0.7
+              }
+              geometry Sphere {
+                radius 0.003
+                subdivision 2
+              }
+            }
+            DEF PROPELLER Propeller {
+              thrustConstants -0.01 -0.001
+              torqueConstants 0 0
+              device RotationalMotor {
+                name "motor"
+              }
+              slowHelix Solid {
+                children [
+                  Shape {
+                    appearance PBRAppearance {
+                      baseColor 1 0.3 0.1
+                      roughness 0.3
+                      metalness 0.1
+                    }
+                    geometry Box {
+                      size 0.005 0.001 0.15
+                    }
+                  }
+                ]
+                name "solid(1)"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+  name "alen3"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.001 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005
+    }
+  ]
+  boundingObject Pose {
+    rotation 0 1 0 1.57
+    children [
+      USE BODY
+    ]
+  }
+  physics Physics {
+    density 999
+    centerOfMass [
+      0 0 -0.001
+    ]
+    damping Damping {
+      linear 0.3
+      angular 0.7
+    }
+  }
+  controller "alen3_controller_teleop"
+  supervisor TRUE
+}
