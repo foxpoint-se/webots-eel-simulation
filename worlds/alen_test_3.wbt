@@ -8,8 +8,8 @@ EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/project
 WorldInfo {
 }
 Viewpoint {
-  orientation 0.40217564172343684 0.03424428002888827 -0.9149218996666573 2.9860929142636117
-  position 3.5832683737357582 1.6421327878633363 3.8246960889127934
+  orientation 0.36324914577468265 0.11035625171518922 -0.9251332638065379 2.5936050153085985
+  position 6.43204178662984 5.249704762206515 7.261495592309435
 }
 TexturedBackground {
 }
@@ -22,6 +22,7 @@ RectangleArena {
   }
 }
 Fluid {
+  translation 0 0 1.4
   children [
     DEF WATER_VOLUME Shape {
       appearance PBRAppearance {
@@ -112,6 +113,7 @@ DEF ROBOT Robot {
               }
             }
             DEF PROPELLER Propeller {
+              shaftAxis 1 0 0.2995441818571548
               thrustConstants -0.01 -0.001
               torqueConstants 0 0
               device RotationalMotor {
@@ -136,6 +138,9 @@ DEF ROBOT Robot {
           ]
         }
       ]
+    }
+    InertialUnit {
+      rotation 0 0 1 3.14
     }
   ]
   name "alen3"
